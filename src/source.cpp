@@ -2,21 +2,21 @@
 #include <ctime>
 #include "../include/header.h"
 
+//-------Class Employee------
 
+Employee::Employee(SubTasks inSubTask) { subTask.second = inSubTask; }
 
-Employee::Employee(char inSubTask) { subTask.second = inSubTask; }
+std::pair<int, SubTasks>& Employee::setSubTask() { return subTask; }
 
-std::pair<int, char>& Employee::setSubTask() { return subTask; }
+std::pair<int, SubTasks>& Employee::getSubTask() { return subTask; }
 
-std::pair<int, char>& Employee::getSubTask() { return subTask; }
-
-
+//-------Class Manager-------
 
 Manager::Manager(int inNumberOfEmployees) : numberOfEmployees{ inNumberOfEmployees }
 {
     employees = new Employee * [numberOfEmployees];
     for (int i{}; i < numberOfEmployees; ++i)
-        employees[i] = new Employee(noTask);
+        employees[i] = new Employee(SubTasks::X);
 }
 
 Manager::~Manager()
@@ -40,7 +40,7 @@ Employee* Manager::getEmployeeByIndex(int idx) { return employees[idx]; }
 bool Manager::availableEmployees()
 {
     for (int i{}; i < numberOfEmployees; ++i)
-        if (employees[i]->getSubTask().second == noTask) return false;
+        if (employees[i]->getSubTask().second == SubTasks::X) return false;
 
     return true;
 }
@@ -52,19 +52,20 @@ void Manager::distributeTasks()
 
     for (int i{}; i < getNumberOfEmployees(); ++i)
     {
-        if (employees[i]->getSubTask().second != noTask) continue;
+        if (employees[i]->getSubTask().second != SubTasks::X) continue;
 
         for (int j{ 1 }; j <= numberOfTasks; ++j)
         {
-            char privSubTask[]{ noTask, noTask, noTask };
+            SubTasks privSubTask[]{ SubTasks::X, SubTasks::X, SubTasks::X };
 
-            for (int k{}; k < (subTaskMax - subTaskMin + 1); ++k)
+            for (int k{}; k < (static_cast<int>(SubTasks::X) - static_cast<int>(SubTasks::A)); ++k)
             {
                 if (i == getNumberOfEmployees()) return;
 
                 //Разбиение задачи на подзадачи
 
-                char currentSubTask = static_cast<char>(rand() % (subTaskMax - subTaskMin + 1) + subTaskMin);
+                SubTasks currentSubTask = static_cast<SubTasks>(rand() %
+                        (static_cast<int>(SubTasks::X) - static_cast<int>(SubTasks::A)) + static_cast<int>(SubTasks::A));
 
                 if (currentSubTask != privSubTask[0] && currentSubTask != privSubTask[1]) privSubTask[k] = currentSubTask;
                 else { --k;	continue; }
@@ -78,7 +79,7 @@ void Manager::distributeTasks()
     }
 }
 
-
+//-------Class Chief---------
 
 Chief::Chief(std::pair<int, int*> parameter) : numberOfManagers{ parameter.first }
 {

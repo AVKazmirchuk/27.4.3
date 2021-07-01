@@ -25,6 +25,8 @@ bool cinNoFail()
     return true;
 }
 
+
+
 std::pair<int, int*> input()
 {
     int numberOfManagers;
@@ -49,6 +51,8 @@ std::pair<int, int*> input()
     return { numberOfManagers, employees };
 }
 
+
+
 void output(Chief* chief)
 {
     std::cout << "--------------------\n";
@@ -56,12 +60,24 @@ void output(Chief* chief)
     for (int j{}; j < chief->getNumberOfManagers(); ++j)
     {
         std::cout << "Manager: " << j + 1 << ", employees: " << chief->getManagerByIndex(j)->getNumberOfEmployees() <<
-                  ", tasks: " << chief->getManagerByIndex(j)->getTask() << ", number of tasks: " << chief->getManagerByIndex(j)->getNumberOfTasks() << '\n';
+                  ", tasks: " << chief->getManagerByIndex(j)->getTask() << ", number of tasks: " <<
+                  chief->getManagerByIndex(j)->getNumberOfTasks() << '\n';
 
         for (int i{}; i < chief->getManagerByIndex(j)->getNumberOfEmployees(); ++i)
         {
-            std::cout << chief->getManagerByIndex(j)->getEmployeeByIndex(i)->getSubTask().first <<
-                      chief->getManagerByIndex(j)->getEmployeeByIndex(i)->getSubTask().second << ' ';
+            SubTasks subTask = chief->getManagerByIndex(j)->getEmployeeByIndex(i)->getSubTask().second;
+            char outSubTask;
+
+            switch (subTask)
+            {
+                case SubTasks::A : outSubTask = 'A'; break;
+                case SubTasks::B : outSubTask = 'B'; break;
+                case SubTasks::C : outSubTask = 'C'; break;
+                case SubTasks::X : outSubTask = 'X'; break;
+                default: break;
+            }
+
+            std::cout << chief->getManagerByIndex(j)->getEmployeeByIndex(i)->getSubTask().first << outSubTask << ' ';
         }
 
         std::cout << '\n';
@@ -69,6 +85,8 @@ void output(Chief* chief)
 
     std::cout << "--------------------\n";
 }
+
+
 
 int main()
 {

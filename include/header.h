@@ -1,26 +1,34 @@
 #pragma once
 #include <iostream>
 
+enum class SubTasks
+{
+        A,
+        B,
+        C,
+        X
+};
+
+
+
+
 class Employee
 {
 private:
-    std::pair<int, char> subTask;
+    std::pair<int, SubTasks> subTask;
 public:
-    Employee(char inSubTask); ;
-
-    std::pair<int, char>& setSubTask();
-
-    std::pair<int, char>& getSubTask();
+    Employee(SubTasks inSubTask);
+    std::pair<int, SubTasks>& setSubTask();
+    std::pair<int, SubTasks>& getSubTask();
 };
+
+
 
 class Manager
 {
 private:
     int task{};
     int numberOfTasks{};
-    const char noTask = 'X';
-    const char subTaskMin = 'A';
-    const char subTaskMax = 'C';
 
     int numberOfEmployees;
 
@@ -44,6 +52,8 @@ public:
 
     void distributeTasks();
 };
+
+
 
 class Chief
 {
