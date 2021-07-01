@@ -58,14 +58,13 @@ void Manager::distributeTasks()
         {
             SubTasks privSubTask[]{ SubTasks::X, SubTasks::X, SubTasks::X };
 
-            for (int k{}; k < (static_cast<int>(SubTasks::X) - static_cast<int>(SubTasks::A)); ++k)
+            for (int k{}; k < static_cast<int>(SubTasks::X); ++k)
             {
                 if (i == getNumberOfEmployees()) return;
 
                 //Разбиение задачи на подзадачи
 
-                SubTasks currentSubTask = static_cast<SubTasks>(rand() %
-                        (static_cast<int>(SubTasks::X) - static_cast<int>(SubTasks::A)) + static_cast<int>(SubTasks::A));
+                SubTasks currentSubTask = static_cast<SubTasks>(rand() % static_cast<int>(SubTasks::X));
 
                 if (currentSubTask != privSubTask[0] && currentSubTask != privSubTask[1]) privSubTask[k] = currentSubTask;
                 else { --k;	continue; }
